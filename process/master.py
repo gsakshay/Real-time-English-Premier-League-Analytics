@@ -8,9 +8,11 @@ import sys
 import findspark
 findspark.init()
 
+hdfs_base = 'hdfs://localhost:9000/'
+
 #paths for players.csv and teams.csv
-players_csv_path = 'hdfs://localhost:9000/input/players.csv'
-teams_csv_path = 'hdfs://localhost:9000/input/teams.csv'
+players_csv_path = '../input/players.csv'
+teams_csv_path = '../input/teams.csv'
 
 # stores per match metrics for each player that resets at the end of the match
 player_metrics = dict()
@@ -681,7 +683,7 @@ def writeToHDFS():
 		lst1.append(players_data[d])
 
 	df1 = sqlContext.createDataFrame(lst1)
-	df1.write.json("/input_proj/players2.json",mode = "overwrite")
+	df1.write.json(hdfs_base + "input/players2.json",mode = "overwrite")
 
 	#writing player_ratings to hdfs
 	l=[]
@@ -699,7 +701,7 @@ def writeToHDFS():
 		 ])
 
 	df2 = sqlContext.createDataFrame(data=l,schema=player_rating_schema)
-	df2.write.json("/input_proj/player_ratings.json",mode = "overwrite")
+	df2.write.json(hdfs_base + "input/player_ratings.json",mode = "overwrite")
 
 	#writing player chemistries to hdfs
 	l=[]
@@ -716,10 +718,10 @@ def writeToHDFS():
 		 ])
 
 	df3 = sqlContext.createDataFrame(data=l,schema=players_chemistry_schema)
-	df3.write.json("/input_proj/players_chemistry.json",mode = "overwrite")
+	df3.write.json(hdfs_base + "input/players_chemistry.json",mode = "overwrite")
 
 	#writing match_details to local file
-	with open('/home/akshay/Desktop/BigDataProject/matches_details.json','w') as f:
+	with open(hdfs_base + 'input/matches_details.json','w') as f:
 		f.write(json.dumps(match_details,indent=4))
 
 

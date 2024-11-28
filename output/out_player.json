@@ -1,0 +1,15 @@
+{
+  "name": "Cristiano Ronaldo",
+  "birthArea": "Funchal, Portugal",
+  "birthDate": "1985-02-05",
+  "foot": "Right",
+  "role": "Forward",
+  "height": 187,
+  "passportArea": "Portugal",
+  "weight": 83,
+  "fouls": 5,
+  "goals": 701,
+  "own_goals": 0,
+  "percent_pass_accuracy": 85,
+  "percent_shots_on_target": 72
+}

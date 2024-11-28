@@ -10,17 +10,20 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml import Pipeline
 import datetime
 
-#all paths for required files
-players_json_path = 'hdfs://localhost:9000/input_proj/players2.json'
-players_chemistry_path = 'hdfs://localhost:9000/input_proj/players_chemistry2.json'
-players_ratings_path = 'hdfs://localhost:9000/input_proj/player_ratings.json'
-matches_json_path = '/home/akshay/Desktop/BigDataProject//matches_details.json'
-input_player_data_path = '/home/akshay/Desktop/BigDataProject/inp_player.json'
-output_player_data_path = '/home/akshay/Desktop/BigDataProject/out_player.json'
-input_match_data_path = '/home/akshay/Desktop/BigDataProject/inp_match.json'
-output_match_data_path = '/home/akshay/Desktop/BigDataProject/out_match.json'
-input_prediction_data_path = '/home/akshay/Desktop/BigDataProject/inp_predict.json'
-output_prediction_data_path = '/home/akshay/Desktop/BigDataProject/out_predict.json'
+hdfs_base = 'hdfs://localhost:9000/'
+
+players_json_path =  hdfs_base + 'input/players2.json'
+players_chemistry_path = hdfs_base + 'input/players_chemistry2.json'
+players_ratings_path = hdfs_base + 'input/player_ratings.json'
+matches_json_path = hdfs_base + 'input/matches_details.json'
+
+input_player_data_path = '../inp_player.json'
+input_match_data_path = '../inp_match.json'
+input_prediction_data_path = '../inp_predict.json'
+
+output_player_data_path = '../out_player.json'
+output_match_data_path = '../out_match.json'
+output_prediction_data_path = '../out_predict.json'
 
 spark = SparkSession.builder.appName("User_Interface").getOrCreate()
 sqlcontext=SQLContext(spark)

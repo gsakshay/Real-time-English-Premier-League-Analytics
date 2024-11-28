@@ -1,0 +1,10 @@
+{
+  "team1": {
+    "name": "Manchester United",
+    "winning_chance": 65
+  },
+  "team2": {
+    "name": "Liverpool",
+    "winning_chance": 35
+  }
+}

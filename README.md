@@ -1,87 +1,77 @@
-# English Premier League Football Analytics Project
+# English Premier League (EPL) Match Analytics with Spark and HDFS
 
-## Overview
-This project leverages Apache Spark Streaming and Spark MLLib to process and analyze real-time football match data from the English Premier League. It consists of two main components:
-
-1. **Data Processing (`master.py`)**: Handles real-time streaming of match events, processes player and match statistics, and computes key metrics.
-2. **Analytics Interface (`ui.py`)**: Provides post-processing analytics, such as clustering players, calculating chemistry statistics, and predicting match outcomes using machine learning.
+This project processes live-streamed English Premier League (EPL) match data using **Spark Streaming** and **HDFS** for fault-tolerant storage. The processed data includes match details, player ratings, chemistry between players, and more. These outputs are used for analytics and match predictions through a query interface. The complete details of the process can be found in [REPORT](./REPORT.md)
 
 ## Features
-- **Real-Time Data Processing**:
-  - Processes live match data streams using Spark Streaming.
-  - Tracks individual player metrics, including:
-    - Goals, fouls, shots on target, and pass accuracy.
-    - Chemistry and performance trends.
-  - Aggregates and updates metrics for the entire stream.
+1. Real-time data ingestion and processing using **Spark Streaming**.
+2. Scalable, distributed storage with **HDFS** for intermediate and final outputs.
+3. Fault-tolerant computations with **Spark checkpointing**.
+4. Detailed analytics and match predictions.
 
-- **Post-Match Analytics**:
-  - Clustering players based on performance using K-Means (Spark MLLib).
-  - Match prediction using trained machine learning models.
-  - Chemistry analysis to evaluate player relationships and team dynamics.
-  - Player and match data queries with JSON-based output.
+## Requirements
+### System Prerequisites
+- Python 3.8 or higher
+- Hadoop (HDFS) installed and running locally
+- Java 8 or higher
+- Apache Spark
+- Virtual environment for Python dependencies
 
-## Architecture
-1. **Real-Time Data Processing** (`master.py`):
-   - Sets up a Spark Streaming pipeline to process match events from a socket stream.
-   - Reads and processes data from input CSV files (`players.csv`, `teams.csv`).
-   - Updates player and team statistics in real-time.
-   - Supports fault-tolerant streaming with checkpointing.
+## Project Setup
 
-2. **Analytics and Interface** (`ui.py`):
-   - Reads processed data for further analysis.
-   - Implements machine learning models like K-Means for clustering players based on performance metrics.
-   - Predicts match outcomes using Spark MLLib's regression techniques.
-   - Exports results as JSON for easy integration with external systems.
+### 1. HDFS Setup
+#### Install and Configure HDFS
+- Ensure Hadoop is installed on your system. If not, install it using [Apache Hadoop installation guide](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html).
+- Start and verify the running of HDFS
+- Create Required HDFS Directories
+```bash
+hdfs dfs -mkdir -p /input
+hdfs dfs -mkdir -p /output
+```
 
-## Usage
+### 2. Streaming Service
+Start the **streaming service** to generate live EPL match data:
+```bash
+python stream.py
+```
+This will stream data to port `6100` for Spark Streaming to process.
 
-### Running the Real-Time Data Processing
-1. Start a socket server on port `6100` to feed match data.
-2. Run the streaming script:
+### 3. Process the streamed data and stores intermediate and final results in HDFS:
+1. Start the Spark application by running:
    ```bash
    python master.py
    ```
-3. The script will process data streams and update metrics in real-time.
+2. The program will:
+   - Read streamed data from the streaming service.
+   - Process the data in real time.
+   - Store outputs to HDFS directories under `/output/`.
 
-### Performing Post-Match Analytics
-1. Run the analytics interface:
+Expected output directories in HDFS:
+- `/output/players2.json`
+- `/output/player_ratings.json`
+- `/output/players_chemistry.json`
+- `/output/matches_details.json`
+
+
+### 4. Running the query interface
+The **query interface** uses the processed data from HDFS for analytics and prediction.
+
+Get the inputs reqdy for queries, 
+- `inp_player.json` for player profile queries.
+- `inp_match.json` for match information.
+- `inp_predict.json` for match predictions.
+  
+1. Start the interface:
    ```bash
-   python ui.py
+   python query_interface.py
    ```
-2. Use the following functions for analytics:
-   - **Player Profile**: Query specific player data by name.
-   - **Match Details**: Retrieve match details by label.
-   - **Clustering**: Cluster players into groups based on performance metrics.
-   - **Match Prediction**: Predict match outcomes using processed data.
 
-## File Descriptions
-- **`master.py`**:
-  - Handles real-time streaming and processing of match events.
-  - Reads input files (`players.csv`, `teams.csv`) and initializes metrics for players and teams.
-  - Updates metrics such as goals, pass accuracy, and fouls during the match.
+The system will generate the corresponding output files
+- `out_player.json` for player profiles.
+- `out_match.json` for match insights.
+- `out_predict.json` for match prediction results.
 
-- **`ui.py`**:
-  - Provides an interface for querying and analyzing processed data.
-  - Implements clustering and prediction algorithms using Spark MLLib.
-  - Outputs results to JSON files for integration or visualization.
-
-## Example Outputs
-- Player Profile:
-  ```json
-  {
-      "Id": "1",
-      "name": "John Doe",
-      "number_of_goals": 5,
-      "pass_accuracy": 87.5,
-      "role": "Midfielder"
-  }
-  ```
-- Match Details:
-  ```json
-  {
-      "match_id": "EPL123",
-      "teams": ["Team A", "Team B"],
-      "score": "2-1",
-      "man_of_the_match": "John Doe"
-  }
-  ```
+## Workflow Summary
+1. Set up and start HDFS.
+2. Start the streaming service (`stream.py`) for live EPL match data.
+3. Run `master.py` to process streamed data with Spark and store results in HDFS.
+4. Start the UI (`query_interface.py`) for analytics and predictions.

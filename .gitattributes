@@ -1,0 +1,4 @@
+stream/eve.txt filter=lfs diff=lfs merge=lfs -text
+stream/mat.txt filter=lfs diff=lfs merge=lfs -text
+input/player.csv filter=lfs diff=lfs merge=lfs -text
+input/teams.csv filter=lfs diff=lfs merge=lfs -text

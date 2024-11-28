@@ -1,0 +1,22 @@
+{
+  "date": "2024-11-18",
+  "duration": "Regular",
+  "winner": "Manchester United",
+  "venue": "Old Trafford",
+  "gameweek": 12,
+  "goals": [
+    {
+      "name": "Marcus Rashford",
+      "team": "Manchester United",
+      "number_of_goals": 2
+    },
+    {
+      "name": "Mohamed Salah",
+      "team": "Liverpool",
+      "number_of_goals": 1
+    }
+  ],
+  "own_goals": [],
+  "yellow_cards": ["Bruno Fernandes", "Andrew Robertson"],
+  "red_cards": []
+}
