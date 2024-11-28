@@ -66,7 +66,8 @@ The system is built on the following components:
     "lineup": "the list of the team's players in the starting lineup and some basic statistics about their performance during the match (goals, own goals, cards)",
     "substitutions": "the list of team's substitutions during the match, describing the players involved and the minute of the substitution",
   }
-}```
+}
+```
 
 #### Event JSON
 
@@ -84,7 +85,8 @@ The system is built on the following components:
   "playerId": "the identifier of the player who generated the event",
   "positions": "the origin and destination positions associated with the event",
   "teamId": "the identifier of the player's team"
-}```
+}
+```
 
 ## Player Metrics
 
@@ -175,26 +177,30 @@ Player Rating = (player_performance + existing_player_rating) / 2
 
 ### 1. Match Prediction
 
+Request
+
 ```json
-// Request
 {
     "req_type": 1,
     "date": "YYYY-MM-DD",
     "team1": {
         "name": "string",
         "player1": "string",
-        // ... player11
+        "..."
+        "player11": "string",
     },
     "team2": {
         "name": "string",
         "player1": "string",
-        // ... player11
+        "..."
+        "player11": "string",
     }
 }
 ```
 
+Response
+
 ```json
-// Response
 {
     "team1": {
         "name": "string",
@@ -209,16 +215,19 @@ Player Rating = (player_performance + existing_player_rating) / 2
 
 
 ### 2. Player Profile
+
+Request
+
 ```json
-// Request
 {
     "req_type": 2,
     "name": "string"
 }
 ```
 
+Response
+
 ```json
-// Response
 {
     "name": "string",
     "birthArea": "string",
@@ -233,20 +242,25 @@ Player Rating = (player_performance + existing_player_rating) / 2
     "own_goals": "integer",
     "percent_pass_accuracy": "integer",
     "percent_shots_on_target": "integer"
-}```
+}
+```
 
 
 ### 3. Match Information
+
+Request
+
+
 ```json
-// Request
 {
     "date": "YYYY-MM-DD",
     "label": "string"
 }
 ```
 
+Response
+
 ```json
-// Response
 {
     "date": "YYYY-MM-DD",
     "duration": "string",
